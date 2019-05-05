@@ -18,6 +18,14 @@ DATETIME_LISTS = {
             'Sunday']
 }
 
+def get_cities_input_msg():
+    count = 1
+    msg= 'Choose city by number: \n'
+    for c in CITY_DATA.keys():
+        msg += '{} = {} \n'.format(count, c)
+        count += 1
+    return msg
+
 def get_months_input_msg():
     count = 1
     msg = 'Choose month by number: \n'
@@ -54,7 +62,7 @@ def get_filters():
     while True:
         cities = ['chicago', 'new york city', 'washington']
         try: 
-            city_inp = int(input('\nChoose city: 1=Chicago, 2=New York City, 3=Washington.\n'))
+            city_inp = int(input(get_cities_input_msg()))
             # check input data for city - only 1,2,3 are allowed
             r = range(1,4)
             if ( city_inp not in r):
