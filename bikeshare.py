@@ -47,6 +47,25 @@ def get_days_input_msg():
 def get_input_error_msg(param, input_range):
     return 'Invalid param! You can only use one of the following params for {}: {}'.format(param, [i for i in input_range])
 
+def get_raw_data_msg():
+    return 'Would you like to see 5 lines of raw data? \n 1 = yes \n 2 = no \n'
+
+def get_raw_data(df):
+    last_count = 0
+    while True:
+        try:
+            show_raw_data = int(input(get_raw_data_msg()))
+            output = []
+            if(show_raw_data == 1):
+                for i in range(last_count, last_count + 5):
+                    print(df.iloc[i].to_dict())
+                    print('')
+                    last_count += 1
+            if(show_raw_data == 2):
+                break
+        except Exception as ve:
+            print('Error occured', ve)
+
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -97,6 +116,8 @@ def get_filters():
     print('-'*40)
     return city, month, day
 
+def read_city_data_from_csv(city):
+    return pd.read_csv(CITY_DATA[city])
 
 def load_data(city, month, day):
     """
@@ -111,7 +132,7 @@ def load_data(city, month, day):
     """
 
     # load data file into a dataframe
-    df = pd.read_csv(CITY_DATA[city])
+    df = read_city_data_from_csv(city)
 
     # convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
@@ -264,6 +285,10 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
+        """ Reading cities again as the df object gets modified in ohter functions
+            but we want to see the raw data. 
+            If it't not a concern one could also use just df object """
+        get_raw_data(read_city_data_from_csv(city))
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
