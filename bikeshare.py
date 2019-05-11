@@ -51,6 +51,7 @@ def get_raw_data_msg():
     return 'Would you like to see 5 lines of raw data? \n 1 = yes \n 2 = no \n'
 
 def get_raw_data(df):
+    ''' Asks user if he want to see raw data and enables him to increment the output by 5 '''
     last_count = 0
     while True:
         try:
