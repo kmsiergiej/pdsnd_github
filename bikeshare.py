@@ -42,6 +42,7 @@ def get_input_error_msg(param, input_range):
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
+    Expect integer values as input from the user.
 
     Returns:
         (str) city - name of the city to analyze
